@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Route, Link, useHistory } from 'react-router-dom';
+import '../App.css';
 import Game from './Game';
+import Button from 'react-bootstrap/Button';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 const GameList = () => {
     const [games, setGames] = useState([]);
@@ -21,24 +24,27 @@ const GameList = () => {
     }
 
     return (
+        
         <>
             {!!games.length ? (
                 <>
-                    <Route exact path='/'>
-                        <ul>
-                            {games.map((game, index) => (
-                                <li key={index}>
-                                    <Link to={`/${game.slug}`}>
-                                        <img alt='{game.name} cover' src={game.cover_art} width='150px'></img><br></br>{game.name}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </Route>
-                    <Route path='/:game_slug'>
-                        <Game />
-                        <button type='button' onClick={() => history.goBack()}>Back</button>
-                    </Route>
+                    <div className='games'>
+                        <Route exact path='/'>
+                            <ListGroup>
+                                {games.map((game, index) => (
+                                    <ListGroup.Item key={index}>
+                                        <Link to={`/${game.slug}`}>
+                                            <img alt='{game.name} cover' src={game.cover_art} width='150px'></img><br></br>{game.name}
+                                        </Link>
+                                    </ListGroup.Item>
+                                ))}
+                            </ListGroup>
+                        </Route>
+                        <Route path='/:game_slug'>
+                            <Game />
+                            <Button onClick={() => history.goBack()}>Back</Button>
+                        </Route>
+                    </div>
                 </>
             ) : (
                 <p>Loading game list...</p>
